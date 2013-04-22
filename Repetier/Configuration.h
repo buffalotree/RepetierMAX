@@ -150,7 +150,7 @@ Overridden if EEPROM activated.*/
 #define EXT0_X_OFFSET 0
 #define EXT0_Y_OFFSET 0
 // for skeinforge 40 and later, steps to pull the plasic 1 mm inside the extruder, not out.  Overridden if EEPROM activated.
-#define EXT0_STEPS_PER_MM 584   //Set this to 292 for RAMBo 1.0 and earlier boards, and 585 for version 1.1 and later boards for a good starting value
+#define EXT0_STEPS_PER_MM 584   //Set this to 292 for RAMBo 1.0 and earlier boards, and 584 for version 1.1 and later boards for a good starting value
 // What type of sensor is used?
 // 1 is 100k thermistor (Epcos B57560G0107F000 - RepRap-Fab.org and many other)
 // 2 is 200k thermistor
@@ -221,12 +221,12 @@ A good start is 30 lower then the optimal value. You need to leave room for cool
 */
 #define EXT0_PID_INTEGRAL_DRIVE_MIN 60
 /** P-gain.  Overridden if EEPROM activated. */
-#define EXT0_PID_P   35.01
+#define EXT0_PID_P   46.78
 /** I-gain. Overridden if EEPROM activated.
 */
-#define EXT0_PID_I   1.74
+#define EXT0_PID_I   2.68
 /** Dgain.  Overridden if EEPROM activated.*/
-#define EXT0_PID_D 175.75
+#define EXT0_PID_D 204
 // maximum time the heater is can be switched on. Max = 255.  Overridden if EEPROM activated.
 #define EXT0_PID_MAX 255
 /** \brief Faktor for the advance algorithm. 0 disables the algorithm.  Overridden if EEPROM activated.
@@ -671,9 +671,9 @@ on this endstop.
 // For delta robot Z_MAX_LENGTH is maximum travel of the towers and should be set to the distance between the hotend
 // and the platform when the printer is at its home position.
 // If EEPROM is enabled these values will be overidden with the values in the EEPROM
-#define X_MAX_LENGTH 354.3
-#define Y_MAX_LENGTH 354.3
-#define Z_MAX_LENGTH 354.3  // Set this to your appx maximum Z height from home position to table measred from the nozzle tip.  You can fine-tune this with either the endstop screws or eeprom settings in Repetier Host
+#define X_MAX_LENGTH 365.0
+#define Y_MAX_LENGTH 365.0
+#define Z_MAX_LENGTH 365.0  // Set this to your appx maximum Z height from home position to table measred from the nozzle tip.  You can fine-tune this with either the endstop screws or eeprom settings in Repetier Host
 
 // Coordinates for the minimum axis. Can also be negative if you want to have the bed start at 0 and the printer can go to the left side
 // of the bed. Maximum coordinate is given by adding the above X_MAX_LENGTH values.
@@ -749,9 +749,9 @@ on this endstop.
     The axis order in all axis related arrays is X, Y, Z
      Overridden if EEPROM activated.
     */
-#define MAX_FEEDRATE_X 200
-#define MAX_FEEDRATE_Y 200
-#define MAX_FEEDRATE_Z 200
+#define MAX_FEEDRATE_X 150
+#define MAX_FEEDRATE_Y 150
+#define MAX_FEEDRATE_Z 150
 
 /** Speed in mm/min for finding the home position.  Overridden if EEPROM activated. */
 #define HOMING_FEEDRATE_X 60
