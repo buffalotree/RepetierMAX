@@ -211,7 +211,7 @@ Values for starts:
 The precise values may differ for different nozzle/resistor combination. 
  Overridden if EEPROM activated.
 */
-#define EXT0_PID_INTEGRAL_DRIVE_MAX 190
+#define EXT0_PID_INTEGRAL_DRIVE_MAX 205
 /** \brief lower value for integral part
 
 The I state should converge to the exact heater output needed for the target temperature.
@@ -221,12 +221,12 @@ A good start is 30 lower then the optimal value. You need to leave room for cool
 */
 #define EXT0_PID_INTEGRAL_DRIVE_MIN 60
 /** P-gain.  Overridden if EEPROM activated. */
-#define EXT0_PID_P   46.78
+#define EXT0_PID_P   11.63
 /** I-gain. Overridden if EEPROM activated.
 */
-#define EXT0_PID_I   2.68
+#define EXT0_PID_I   0.43
 /** Dgain.  Overridden if EEPROM activated.*/
-#define EXT0_PID_D 204
+#define EXT0_PID_D 78.65
 // maximum time the heater is can be switched on. Max = 255.  Overridden if EEPROM activated.
 #define EXT0_PID_MAX 255
 /** \brief Faktor for the advance algorithm. 0 disables the algorithm.  Overridden if EEPROM activated.
@@ -1022,7 +1022,7 @@ IMPORTANT: With mode 1 some changes in configuration.h are not set any more, as 
 /** Show extended directory including file length. Don't use this with pronterface! */
 #define SD_EXTENDED_DIR
 // If you want support for G2/G3 arc commands set to true, otherwise false.
-#define ARC_SUPPORT true
+#define ARC_SUPPORT false
 
 /** You can store the current position with M401 and go back to it with M402. 
    This works only if feature is set to true. */
