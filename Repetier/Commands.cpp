@@ -807,7 +807,7 @@ void process_command(GCode *com,byte bufferedCommand)
         break;
       case 115: {// M115
 #if DRIVE_SYSTEM==3
-        out.println_P(PSTR("FIRMWARE_NAME:Repetier_" REPETIER_VERSION " FIRMWARE_URL:https://github.com/repetier/Repetier-Firmware/ PROTOCOL_VERSION:1.0 MACHINE_TYPE:Rostock EXTRUDER_COUNT:" XSTR(NUM_EXTRUDER) " REPETIER_PROTOCOL:2"));
+        out.println_P(PSTR("FIRMWARE_NAME:RepetierMAX" REPETIER_VERSION " FIRMWARE_URL:https://github.com/seemecnc/RepetierMAX PROTOCOL_VERSION:1.0 MACHINE_TYPE:RostockMAX EXTRUDER_COUNT:" XSTR(NUM_EXTRUDER) " REPETIER_PROTOCOL:2"));
 #else
 #if DRIVE_SYSTEM==0
         out.println_P(PSTR("FIRMWARE_NAME:Repetier_" REPETIER_VERSION " FIRMWARE_URL:https://github.com/repetier/Repetier-Firmware/ PROTOCOL_VERSION:1.0 MACHINE_TYPE:Mendel EXTRUDER_COUNT:" XSTR(NUM_EXTRUDER) " REPETIER_PROTOCOL:2"));
