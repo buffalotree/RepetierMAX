@@ -618,6 +618,7 @@ void process_command(GCode *com,byte bufferedCommand)
         }
         break;
       case 104: // M104
+#if NUM_EXTRUDER>0
         if(reportTempsensorError()) break;
         previous_millis_cmd = millis();
         if(DEBUG_DRYRUN) break;
@@ -633,6 +634,7 @@ void process_command(GCode *com,byte bufferedCommand)
           else
             extruder_set_temperature(com->S,current_extruder->id);
         }
+#endif
         break;
       case 140: // M140 set bed temp
         if(reportTempsensorError()) break;
@@ -645,6 +647,7 @@ void process_command(GCode *com,byte bufferedCommand)
         break;
       case 109: // M109 - Wait for extruder heater to reach target.
         {
+#if NUM_EXTRUDER>0
           if(reportTempsensorError()) break;
           previous_millis_cmd = millis();
           if(DEBUG_DRYRUN) break;
@@ -692,6 +695,7 @@ void process_command(GCode *com,byte bufferedCommand)
 #endif
         }
         UI_CLEAR_STATUS;
+#endif
         previous_millis_cmd = millis();
         break;
       case 190: // M190 - Wait bed for heater to reach target.
@@ -717,6 +721,18 @@ void process_command(GCode *com,byte bufferedCommand)
         UI_CLEAR_STATUS;
         previous_millis_cmd = millis();
         break;
+#ifdef BEEPER_PIN
+      case 300: {
+        int beepS = 1;
+        int beepP = 1000;
+        if(GCODE_HAS_S(com)) beepS = com->S;
+        if(GCODE_HAS_P(com)) beepP = com->P;
+        tone(BEEPER_PIN, beepS);
+        delay(beepP);
+        noTone(BEEPER_PIN);
+      }
+      break;
+#endif        
 #ifdef TEMP_PID
       case 303: {
           int temp = 150;
@@ -741,14 +757,14 @@ void process_command(GCode *com,byte bufferedCommand)
         wait_until_end_of_move();
         previous_millis_cmd = millis();
         SET_OUTPUT(PS_ON_PIN); //GND
-        WRITE(PS_ON_PIN, LOW);
+        WRITE(PS_ON_PIN, (POWER_INVERTING ? HIGH : LOW));
 #endif
         break;
       case 81: // M81 - ATX Power Off
 #if PS_ON_PIN>-1
         wait_until_end_of_move();
         SET_OUTPUT(PS_ON_PIN); //GND
-        WRITE(PS_ON_PIN, HIGH);
+        WRITE(PS_ON_PIN,(POWER_INVERTING ? LOW : HIGH));
 #endif
         break;
       case 82:
@@ -791,7 +807,7 @@ void process_command(GCode *com,byte bufferedCommand)
         break;
       case 115: {// M115
 #if DRIVE_SYSTEM==3
-        out.println_P(PSTR("FIRMWARE_NAME:RepetierMAX" REPETIER_VERSION " FIRMWARE_URL:https://github.com/seemecnc/RepetierMAX PROTOCOL_VERSION:1.0 MACHINE_TYPE:RostockMAX EXTRUDER_COUNT:" XSTR(NUM_EXTRUDER) " REPETIER_PROTOCOL:2"));
+        out.println_P(PSTR("FIRMWARE_NAME:Repetier_" REPETIER_VERSION " FIRMWARE_URL:https://github.com/repetier/Repetier-Firmware/ PROTOCOL_VERSION:1.0 MACHINE_TYPE:Rostock EXTRUDER_COUNT:" XSTR(NUM_EXTRUDER) " REPETIER_PROTOCOL:2"));
 #else
 #if DRIVE_SYSTEM==0
         out.println_P(PSTR("FIRMWARE_NAME:Repetier_" REPETIER_VERSION " FIRMWARE_URL:https://github.com/repetier/Repetier-Firmware/ PROTOCOL_VERSION:1.0 MACHINE_TYPE:Mendel EXTRUDER_COUNT:" XSTR(NUM_EXTRUDER) " REPETIER_PROTOCOL:2"));
@@ -864,16 +880,18 @@ void process_command(GCode *com,byte bufferedCommand)
 #endif
       #ifdef RAMP_ACCELERATION
       case 201: // M201
-        if(GCODE_HAS_X(com)) axis_steps_per_sqr_second[0] = com->X * axis_steps_per_unit[0];
-        if(GCODE_HAS_Y(com)) axis_steps_per_sqr_second[1] = com->Y * axis_steps_per_unit[1];
-        if(GCODE_HAS_Z(com)) axis_steps_per_sqr_second[2] = com->Z * axis_steps_per_unit[2];
-        if(GCODE_HAS_E(com)) axis_steps_per_sqr_second[3] = com->E * axis_steps_per_unit[3];
+        if(GCODE_HAS_X(com)) max_acceleration_units_per_sq_second[0] = com->X;
+        if(GCODE_HAS_Y(com)) max_acceleration_units_per_sq_second[1] = com->Y;
+        if(GCODE_HAS_Z(com)) max_acceleration_units_per_sq_second[2] = com->Z;
+        if(GCODE_HAS_E(com)) max_acceleration_units_per_sq_second[3] = com->E;
+        update_ramps_parameter();
         break;
       case 202: // M202
-        if(GCODE_HAS_X(com)) axis_travel_steps_per_sqr_second[0] = com->X * axis_steps_per_unit[0];
-        if(GCODE_HAS_Y(com)) axis_travel_steps_per_sqr_second[1] = com->Y * axis_steps_per_unit[1];
-        if(GCODE_HAS_Z(com)) axis_travel_steps_per_sqr_second[2] = com->Z * axis_steps_per_unit[2];
-        if(GCODE_HAS_E(com)) axis_travel_steps_per_sqr_second[3] = com->E * axis_steps_per_unit[3];
+        if(GCODE_HAS_X(com)) max_travel_acceleration_units_per_sq_second[0] = com->X;
+        if(GCODE_HAS_Y(com)) max_travel_acceleration_units_per_sq_second[1] = com->Y;
+        if(GCODE_HAS_Z(com)) max_travel_acceleration_units_per_sq_second[2] = com->Z;
+        if(GCODE_HAS_E(com)) max_travel_acceleration_units_per_sq_second[3] = com->E;
+        update_ramps_parameter();
         break;
       #endif
       case 203: // M203 Temperature monitor
