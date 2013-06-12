@@ -150,7 +150,11 @@ Overridden if EEPROM activated.*/
 #define EXT0_X_OFFSET 0
 #define EXT0_Y_OFFSET 0
 // for skeinforge 40 and later, steps to pull the plasic 1 mm inside the extruder, not out.  Overridden if EEPROM activated.
-#define EXT0_STEPS_PER_MM 584   //Set this to 292 for RAMBo 1.0 and earlier boards, and 584 for version 1.1 and later boards for a good starting value
+// ############################
+//  Set to 92.4 for EZStruder direct drive extruder with rambo 1.1 on boards that are 1/16 stepping, 584 for steves extruder with rambo 1.1 on, and cut values
+//  in half for 1/8 stepping on rambo 1.0 and earlier boards
+// ############################
+#define EXT0_STEPS_PER_MM  92.4  
 // What type of sensor is used?
 // 1 is 100k thermistor (Epcos B57560G0107F000 - RepRap-Fab.org and many other)
 // 2 is 200k thermistor
@@ -185,10 +189,10 @@ Overridden if EEPROM activated.*/
 // length of filament pulled inside the heater. For repsnap or older
 // skeinforge use hiher values.
 //  Overridden if EEPROM activated.
-#define EXT0_MAX_FEEDRATE 45
+#define EXT0_MAX_FEEDRATE 80
 // Feedrate from halted extruder in mm/s
 //  Overridden if EEPROM activated.
-#define EXT0_MAX_START_FEEDRATE 40
+#define EXT0_MAX_START_FEEDRATE 45
 // Acceleration in mm/s^2
 //  Overridden if EEPROM activated.
 #define EXT0_MAX_ACCELERATION 6500
